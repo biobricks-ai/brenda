@@ -15,9 +15,15 @@ stages:
       - ./stages/01_download_data.sh
     outs:
       - download/
-  process:
-    cmd: python3 stages/02_process_data.py
+  extract:
+    cmd: python3 stages/02_extract_data.py
     deps:
-      - ./stages/02_process_data.py
+      - ./stages/02_extract_data.py
     outs:
-      - brick/
+      - download/
+  process:
+    cmd: python3 stages/03_process_data.py
+    deps:
+      - ./stages/03_process_data.py
+    outs:
+      - download/
