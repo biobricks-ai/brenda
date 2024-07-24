@@ -2,6 +2,8 @@
 # -------
 import re
 import pathlib
+import pandas as pd
+
 extensions = ['txt']
 extensions_re = re.compile(r'\.(' + '|'.join(re.escape(ext) for ext in extensions) + r')$')
 
@@ -65,3 +67,21 @@ for file in files:
     else:
       raise Exception('Unknown File Found: %s' % file)
 
+# Reformat to be a pandas dataframe
+
+first_item = True
+
+for key, value in data.items():
+
+    row = { 'ec_number': key }
+    for section, records in value.items():
+      row[section] = [ records ]
+
+    if first_item:
+        brenda_dataframe = pd.DataFrame(row)
+        first_item = False
+    else:
+        new_row = pd.Series(row, index=brenda_dataframe.columns)
+        brenda_dataframe = brenda_dataframe.append(new_row, ignore_index=True)
+
+brenda_dataframe.to_parquet(out_file)
