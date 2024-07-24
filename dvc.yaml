@@ -20,10 +20,10 @@ stages:
     deps:
       - ./stages/02_extract_data.py
     outs:
-      - download/
+      - extract/
   process:
     cmd: python3 stages/03_process_data.py
     deps:
       - ./stages/03_process_data.py
     outs:
-      - download/
+      - brick/
