@@ -82,6 +82,6 @@ for key, value in data.items():
         first_item = False
     else:
         new_row = pd.Series(row, index=brenda_dataframe.columns)
-        brenda_dataframe = brenda_dataframe.append(new_row, ignore_index=True)
+        brenda_dataframe = pd.concat([brenda_dataframe, pd.DataFrame([new_row])], ignore_index=True)
 
 brenda_dataframe.to_parquet(out_file)
