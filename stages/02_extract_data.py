@@ -3,7 +3,7 @@
 import pathlib
 import zipfile
 
-zip_file = 'download/brenda_text.zip'
+zip_file = 'download/brenda_download.zip'
 
 extract_dir = pathlib.Path('extract')
 extract_dir.mkdir(exist_ok=True)
