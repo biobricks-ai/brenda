@@ -30,6 +30,10 @@ for file in files:
             if content:
 
                 ec_number_tag = content.pop(0)
+
+                # Match ID: 1.3.4.5
+                # Match ID: 1.3.4.6 (transferred to 2.3.2.4)
+
                 match = re.search(r'ID\s+(\d+\.\d+\.\d+\.\d+)', ec_number_tag)
 
                 if match != None:
@@ -45,12 +49,15 @@ for file in files:
                     entries = list(filter(None, section.split('\n')))
 
                     if entries:
+
                         section_header = entries.pop(0).lower()
 
-                        # Define the regex pattern to match each entry
-                        pattern = r"[A-Z]+[\t\s]+#\d+#\s+.*?\s+<.*?>"
+                        # Match
+                        #  PR	#8# Homo sapiens
+                        # 	<10,11,12,13,14,15,16,17,18,19,20,21,22,23,53,96,107,109,115,116,119
+                        # 	124,150,180,186,191,194,206,228,229,273>
 
-                        # Use re.findall to find all occurrences of the pattern in the text
+                        pattern = r"[A-Z]+[\t\s]+#\d+#\s+.*?\s+<.*?>"
                         records = re.findall(pattern, section, re.DOTALL)
 
                         data[ec_number][section_header] = records
